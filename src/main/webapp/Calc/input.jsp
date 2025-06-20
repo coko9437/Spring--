@@ -1,0 +1,23 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: it
+  Date: 25. 6. 20.
+  Time: 오전 11:04
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+<form action ="calcResult.jsp" method="post">
+<%--    action : 폼에서 입력한 데이터를 전달 할 곳 (=도착지)--%>
+<%--        method 전달방식을 post => 데이터를 body에 담아서 보냄.--%>
+<%--        get과 비교하자면 공개되지 않는 데이터임.--%>
+    <input type="number" name="num1">
+    <input type="number" name="num2">
+    <button type="submit">SEND</button>
+</form>
+</body>
+</html>
