@@ -23,6 +23,7 @@
     <input type="number" name="num1">
     <input type="number" name="num2">
     <button type="submit">SEND</button>
+    <h2>서블릿이용해서 접속함 : http://localhost:8080/calc/input</h2>
 </form>
 </body>
 </html>

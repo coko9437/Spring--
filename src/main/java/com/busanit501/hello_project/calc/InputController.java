@@ -24,7 +24,7 @@ public class InputController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         System.out.println("inputController.. doGet 처리하기, 화면제공용");
-        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/calc/views/input.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/calc/input.jsp");
         rd.forward(req, resp);
 
     }

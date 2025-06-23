@@ -4,6 +4,11 @@
     1) input.jsp는 GET 방식으로 호출함 -웹브라우저(주소창)에서
         ex) http://localhost:8080/calc/input.jsp?num1=&num2=
 
+    참고,
+    jsp : 기존 html 화면에 + 자바 코드를 주입해서 사용하는 페이지(화면처리)
+    서블릿 : 기존 자바 코드에 + html 화면도 주입이 가능(불편) + 로직 처리 가능함.(로직처리)
+
+
     2) input.jsp는 폼 안에서 method="post" 형식으로 해서
         SEND 버튼을 클릭시 post 호출해서 접근
         ex) <form action="calcResult.jsp" method="post">

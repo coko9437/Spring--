@@ -24,12 +24,13 @@ public class CkmServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.println("<!DOCTYPE html>");
         out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Servlet 테스트</title>");
-        out.println("</head>");
+            out.println("<head>");
+                out.println("<title>Servlet 테스트</title>");
+            out.println("</head>");
         out.println("<body>");
-        out.println("<h1>서버에서 Servlet이라는 자바클래스가 html 화면으로 변환해서 전달 <UNK></h1>");
-        out.println("<h2>나만의 서블릿 자바 클래스 만들어서 테스트연습 해보기</h2>");
+
+            out.println("<h1>서버에서 Servlet이라는 자바클래스가 html 화면으로 변환해서 전달 <UNK></h1>");
+            out.println("<h2>나만의 서블릿 자바 클래스 만들어서 테스트연습 해보기</h2>");
         out.println("</body>");
 
     }

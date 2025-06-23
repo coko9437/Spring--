@@ -23,7 +23,7 @@ public class MyServlet extends HttpServlet {
         // 응답의 콘텐츠 타입을 HTML로 설정하고, 문자 인코딩을 UTF-8로 지정
         // 이 설정은 한글이 올바르게 표시되도록 하기 위해 중요함
         
-
+        // --> 자바에서 HTML 언어를 추가해서 화면만들기 (서블릿 : 자바 베이스에 HTML 언어 추가한 자바클래스)
         resp.setContentType("text/html;charset=UTF-8");
 
         // 응답 출력 스트림을 얻어옴
