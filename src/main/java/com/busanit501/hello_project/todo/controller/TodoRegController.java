@@ -1,4 +1,4 @@
-package com.busanit501.hello_project.todo;
+package com.busanit501.hello_project.todo.controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
