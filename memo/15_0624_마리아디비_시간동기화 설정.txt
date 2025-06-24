@@ -1,0 +1,28 @@
+터미널 명령어창에서 ,
+도커 데스크톱의 마리아DB 컨테이너 실행 후 ,
+[my_container] 의 값 예시: -> 도커의 데스크톱 -> 컨테이너 아이디 복사
+1ab078435e089644fb46258ee8b017f3aa2b6e2dbc30bb718a812c8de2941a9e
+
+1)
+docker exec -it [my_container 아이디] /bin/bash
+docker exec -it 423e71a0d0b7bed571b946548a228b51b0b16c5a1a5b6eab6a75d2307511b408 /bin/bash
+3da9c241a286
+
+2)
+dpkg-reconfigure tzdata
+
+2-1)
+안될 경우
+apt-get update
+apt-get install --reinstall tzdata
+
+3)
+5 asia
+
+4)
+68 seoul
+
+5)
+date 확인.
+
+6) docker 서버 끄고 다시 실행
