@@ -1,6 +1,6 @@
-package com.busanit501.hello_project.todo.Service;
+package com.busanit501.hello_project._2todo.Service;
 
-import com.busanit501.hello_project.todo.dto.TodoDTO;
+import com.busanit501.hello_project._2todo.dto.TodoDTO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
