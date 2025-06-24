@@ -1,4 +1,4 @@
-package com.busanit501.hello_project;
+package com.busanit501.dao.hello_project;
 
 import java.io.*;
 import javax.servlet.http.*;

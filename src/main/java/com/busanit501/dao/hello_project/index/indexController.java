@@ -1,4 +1,4 @@
-package com.busanit501.hello_project.index;
+package com.busanit501.dao.hello_project.index;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
