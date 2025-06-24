@@ -1,4 +1,4 @@
-package com.busanit501.dao.hello_project._2todo.controller;
+package com.busanit501._2todo.controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

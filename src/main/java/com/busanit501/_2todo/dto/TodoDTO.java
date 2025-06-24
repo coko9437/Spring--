@@ -1,4 +1,4 @@
-package com.busanit501.dao.hello_project._2todo.dto;
+package com.busanit501._2todo.dto;
 
 import java.time.LocalDate;
 

@@ -1,7 +1,7 @@
-package com.busanit501.dao.hello_project._2todo.controller;
+package com.busanit501._2todo.controller;
 
-import com.busanit501.dao.hello_project._2todo.dto.TodoDTO;
-import com.busanit501.dao.hello_project._2todo.Service.TodoService;
+import com.busanit501._2todo.dto.TodoDTO;
+import com.busanit501._2todo.Service.TodoService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
