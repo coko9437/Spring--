@@ -54,12 +54,14 @@ public class TodoDAO {
 
         pstmt.setString(1, todoVO.getTitle());
         pstmt.setDate(2, Date.valueOf(todoVO.getDueDate()));
+                    // Date.valueOf : java.time.LocalDate를 java.sql.Date로 변환하는 필수 작업
         pstmt.setBoolean(3, todoVO.isFinished());
 
         // 실제 디비서버에 반영하기. 쓰기 작업 진행.
         pstmt.executeUpdate();
 
     }
+
     // 전체 조회기능
     public List<TodoVO> selectAll() throws Exception{
         String sql = "select * from tbl_todo";
@@ -69,23 +71,24 @@ public class TodoDAO {
 //        조회.. ResultSet 필요함.
         @Cleanup ResultSet rs = pstmt.executeQuery();
 
-        // DB로부터 전달받은 내용을 담아둘 임시 리스트
+        // DB로부터 전달받은 내용(TodoVO의 tno, title 등)을 담아둘 임시 리스트
         List<TodoVO> list = new ArrayList<>();
 
 //        검색 결과 -> 모델에 담고 -> 리스트에 담기, 반복
-        while (rs.next()) {
+        while (rs.next()) { //다음 행(row)**이 존재하면 true를 반환하고, 커서를 그 다음 행으로 이동
 
             TodoVO vo = TodoVO.builder()
                     .tno(rs.getLong("tno"))
                     .title(rs.getString("title"))
-                    .dueDate(rs.getDate("dueDate").toLocalDate())
+                    .dueDate(rs.getDate("dueDate").toLocalDate()) //java.sql.Date를 java.time.LocalDate로 변환
                     .finished(rs.getBoolean("finished"))
                     .build();
-                // 모델-> 리스트 담기
+                // 모델(TodoVO) -> list 에 담기
             list.add(vo);
         }
         return list;
     }
+
     // 하나조회
     public  TodoVO selectOne(Long tno) throws Exception{
         String sql = "select * from tbl_todo where tno = ?";
@@ -104,6 +107,7 @@ public class TodoDAO {
         return vo;
 
     }
+
 //    한개 데이터 삭제하기.
     public void deleteOne(Long tno) throws Exception{
         String sql = "delete from tbl_todo where tno = ?";
@@ -114,7 +118,7 @@ public class TodoDAO {
 
     }
 //    데이터 수정하기.
-                    // TodoVO todoVO -> 화면에서 변경할 데이터를 TodoVO에 담아둠 즉 모델 클래스
+                    // TodoVO todoVO -> 화면에서 변경할 데이터를 todoVO에 담아둠 즉 모델 클래스
     public void updateOne(TodoVO todoVO) throws Exception{
         String sql = "update tbl_todo set title = ?, dueDate = ?, finished = ? where tno = ?";
 

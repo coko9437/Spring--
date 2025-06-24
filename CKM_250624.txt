@@ -1,0 +1,250 @@
+250624
+
+## 마리아DB 설치
+--> docker 이용해서..
+준비물) 도커실행, 터미널에서 설치
+1.
+docker pull mariadb
+2.
+docker run -p 3306:3306 --name [컨테이너 이름] -e MARIADB_ROOT_PASSWORD=[비밀번호] -d mariadb
+ex) docker run -p 3306:3306 --name mariaDB -e MARIADB_ROOT_PASSWORD=1234 -d mariadb
+3. MariaDB에 접속하기
+docker exec -it [컨테이너 이름] mariadb -uroot -p
+ex) docker exec -it mariaDB mariadb -uroot -p
+
+## MariaDB 사용자 추가 및 user 권한 설정
+
+1. 데이터 베이스 생성
+create database {db_name};
+ex) create database webdb;
+2. 사용자 추가
+create user 'user_name'@'ip_address' identified by 'user_password';
+ex) create user 'webuser'@'%' identified by 'webuser';
+3. 사용자에게 권한 부여
+grant all privileges on db_name.* to 'user_name'@'ip_address';
+ex) grant all privileges on *.* to 'webuser'@'%';
+4. 변경사항 적용
+flush privileges;
+
+## 마리아DB 시간동기화
+-->도커 데스크톱의 마리아DB 컨테이너 실행 후 ,
+1)
+docker exec -it [컨테이너 아이디] /bin/bash
+ex) docker exec -it 423e71a0d0b7bed571b946548a228b51b0b16c5a1a5b6eab6a75d2307511b408 /bin/bash
+3da9c241a286
+
+2)
+dpkg-reconfigure tzdata
+2-1)
+안될 경우
+apt-get update
+apt-get install --reinstall tzdata
+3)
+5 asia
+4)
+68 seoul
+5)
+date 확인.
+6) docker 서버 끄고 다시 실행
+
+## 기본 설정 방법
+마리아 디비 설치 후,
+웹 (jsp) 프로젝트 연결하기.
+1. build.gradle 파일에 해당 JSTL문 작성
+implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.5.1'
+
+<-VS-> NoSQL... 몽고디비(Key, Value 구조), 구글(서버리스, 파이어베이스) : 빅데이터관련 저장하기위해 설계
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+마리아 DB
+문자열, 숫자, 데이터 타입에대해서 메모.
+
+정수, 타입.
+1) TINYINT : 매우 작은 정수, 1byte , -128 ~ 127
+2) INT : 4byte , 범위 는 생략, - 2^31 ~
+3) BIGINT : 8byte, 범위는 생략, 약 -2^63 ~
+소수
+4) FLOAT : 4byte ,
+5) DOUBLE : 8byte
+
+날짜, 타입
+1) DATE , 3byte, yyyy-mm-dd
+2) DATETIME, 8byte yyyy-mm-dd - hh:mm:ss
+3) TIME , 3byte, hh:mm:ss
+
+문자열 타입.
+1)VARCHAR(n) : Length + 1 byte ,
+2)TEXT : 최대 크기 64바이트
+3)LONGTEXT : 최대크기 4GB
+4)BLOB(Binary Large Oboject) : 최대 크기 64kb, 음성, 이미지, 영상, 꾸역꾸역 넣어서,
+힘들게 불러옴. -> 미디어 서버에게 위임할것.
+5)LONGBLOB : 최대 크기 4GB
+
+결론) 디비 설계시,크게, 규모를 잡아두기... ex) 회원 의 숫자 :1000, int ,
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+## Lombok
+라이브러리. : Get/Set/ToString/Equals/생성자/Builder 패턴 등 반자동.
+도구를 미리 설치후, 메모리 상에서 띄워서 사용함.
+사용법은 @getter , 어노테이션만 붙이면, 바로 사용가능함.
+
+//원래 우리가 인스턴스 생성 방법
+    //TodoVO Todo = new TodoVO();
+    TodoVO todoVO = new TodoVO();
+    todoVO.setTno(200L);
+    todoVO.setTitle("제목200");
+    todoVO.setDueDate(LocalDate.now());
+
+    System.out.println(todoVO);
+
+    TodoVO todo = TodoVO.builder()
+        .tno(100L)
+        .title("제목100")
+        .dueDate(LocalDate.now())
+        .build();
+System.out.println(todo);
+
+
+## HikariCP란?
+
+HikariCP는 가볍고 빠르며 안정적인 JDBC 커넥션 풀(Connection Pool) 라이브러리입니다. 
+이름처럼 매우 빠른 성능을 자랑합니다. 
+ -주요 설정 옵션
+
+|  	설정		|  			설명				| 기본값 | 권장값 |
+|------			|-----------------------------------------------------------------	|--------|
+| `minimumIdle` 		| 풀에서 유지할 최소 유휴 연결 수 				| 10 | 애플리케이션에 맞게 설정 |
+| `maximumPoolSize` 	| 풀이 가질 수 있는 최대 연결 수 				| 10 | (코어 수 × 2) + 효과적인 디스크 수 |
+| `connectionTimeout` 	| 클라이언트가 연결을 기다리는 최대 시간(ms) 			| 30000 (30초) | 기본값 권장 |
+| `idleTimeout` 		| 연결이 풀에서 유휴 상태로 있을 수 있는 최대 시간(ms) 		| 600000 (10분) | 기본값 권장 |
+| `maxLifetime` 		| 연결의 최대 수명(ms) 					| 1800000 (30분) | DB의 연결 타임아웃보다 짧게 설정 |
+| `autoCommit` 		| 자동 커밋 모드 설정 					| true | 애플리케이션에 맞게 설정 |
+
+## DTO (Data Transfer Object)
+📌 뜻
+데이터를 한 곳에서 다른 곳으로 전달하기 위한 객체
+→ 주로 계층 간 데이터 전달에 사용 (예: 컨트롤러 ↔ 서비스 ↔ DAO 간)
+
+📦 특징
+순수 데이터 저장용 클래스 (getter/setter만 있음)
+
+비즈니스 로직 없음
+
+테이블 구조와 유사하게 구성됨
+public class MemberDTO {
+   // 매개변수
+    private String id;
+    private String name;
+    private String email;
+//---
+    // 생성자
+    public MemberDTO() {}
+    public MemberDTO(String id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+//---
+    // getter / setter
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+}
+----------------------------------------------------------------------------------------------------
+## DAO (Data Access Object)
+📌 뜻
+데이터베이스에 직접 접근하여 CRUD 작업을 수행하는 객체
+
+⚙️ 특징
+DB 연결, SQL 실행, 결과 매핑 처리
+
+DTO 객체를 입출력으로 사용
+
+일반적으로 insert, select, update, delete 등의 메서드를 가짐
+		// DAO 클래스: DB와 직접 통신하며 데이터를 가져오거나 저장하는 역할
+public class MemberDAO {
+
+    		// 회원 ID를 기준으로 해당 회원 정보를 가져오는 메서드
+    public MemberDTO getMemberById(String id) {
+        		// 조회 결과를 담을 DTO 변수. 초기에는 null로 설정.
+        MemberDTO member = null;
+
+        try (
+            		// DB 연결을 위한 Connection 객체 얻기
+            Connection conn = ConnectionUtil.INSTANCE.getConnection();
+
+            		// SQL 쿼리문 준비: ID를 기준으로 회원정보 검색
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM member WHERE id = ?");
+        ) {
+            		// 쿼리문의 ? 자리에 전달받은 id 값을 넣음
+            pstmt.setString(1, id);
+
+            		// 쿼리를 실행하고 결과를 ResultSet 객체로 받음 (가상 테이블처럼 동작)
+            ResultSet rs = pstmt.executeQuery();
+
+            		// 결과가 있으면 (즉, 해당 ID를 가진 회원이 있으면)
+            if (rs.next()) {
+                		// ResultSet에서 각 컬럼의 값을 꺼내서 MemberDTO 객체를 생성
+                		// "id", "name", "email"은 DB 테이블의 컬럼명
+                member = new MemberDTO(
+                    rs.getString("id"),     // id 컬럼 값
+                    rs.getString("name"),   // name 컬럼 값
+                    rs.getString("email")   // email 컬럼 값
+                );
+            }
+
+        } catch (Exception e) {
+            	// 예외 발생 시, 콘솔에 스택 트레이스 출력 (디버깅용)
+            e.printStackTrace();
+        }
+
+        	// 최종적으로 조회된 MemberDTO 객체를 반환 (없으면 null 반환)
+        return member;
+    }
+}
+
+****결론
+- 관계 요약
+역할		클래스 이름	설명
+데이터 담기	MemberDTO	이름, 이메일 같은 데이터 저장
+DB 처리		MemberDAO	SQL문 실행해서 DB와 통신하는 역할
+
+plaintext
+복사
+편집
+[DB] ←→ DAO ←→ DTO ←→ Service/Controller
+- 🧠 비유로 이해하기
+구성	비유				실제
+DTO	택배 상자 (물건 담는 용도)		데이터를 담는 객체
+DAO	택배 기사 (상자 전달하는 사람)	DB에서 데이터를 가져오고 전달함
+
+✅ 요약 정리
+항목		|	DTO (=VO)데이터를 "담는 상자" 역할	|	DAO
+목적		|데이터를 전달하기 위함			|DB와 직접 통신하는 역할
+포함 내용		|필드, getter/setter				|SQL 처리 로직
+위치		|계층 간 데이터 교환 (Controller ↔ DAO 등)	|DB 작업 전담 계층
+비즈니스 로직	|❌ 없음					|⭕ 있음 (단, 데이터 처리 관련만)
+
+
+@@@@@@@ 데이터 수정하기.@@@@@@@@@@@
+public void insert(TodoVO todoVO) throws Exception{   // TodoVO에 정의된 tno, title, dueDate, finished라는 4개의 필드는 실제 데이터가 담긴 todoVO 객체 안에 들어가 있는 상태
+        // 등록 insert sql 문장 작성.
+        String sql = "insert into tbl_todo (title, dueDate, finished) values (?, ?, ?)";
+
+//        디비에 연결할 객체 작성... 자원반납방법은 @Cleanup
+        @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement pstmt = connection.prepareStatement(sql);
+
+        pstmt.setString(1, todoVO.getTitle());
+        pstmt.setDate(2, Date.valueOf(todoVO.getDueDate()));
+                    		// Date.valueOf : java.time.LocalDate를 java.sql.Date로 변환하는 필수 작업
+        pstmt.setBoolean(3, todoVO.isFinished());
+
+        // 실제 디비서버에 반영하기. 쓰기 작업 진행.
+        pstmt.executeUpdate();
+
+    }
