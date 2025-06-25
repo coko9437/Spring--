@@ -62,7 +62,26 @@ dependencies {
     // 4번째, HIKARI CP
     // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
     implementation 'com.zaxxer:HikariCP:6.3.0'
+
+    // 5번째, Modelmapper : DTO <-> VO 변환 해주는 도구
+    // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+    implementation 'org.modelmapper:modelmapper:3.2.4'
+
+    // 6번째, 로깅 도구 내가 지정한 레벨등급에 따라서 기록을 다르게처리
+    // logging 라이브러리,Log4j2
+        // 로깅 도구 , 버전 충돌 나서, 구버전으로 교체
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '3.0.0-beta2'
+
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '3.0.0-beta2'
+
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl
+    testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '3.0.0-beta2'
+
+
 }
+
 
 test {
     useJUnitPlatform()
