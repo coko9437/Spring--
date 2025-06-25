@@ -15,7 +15,7 @@ public enum MapperUtil {
         // DTO <--> VO 2개의 모델클래스 변환하기위한 설정.
         this.modelMapper = new ModelMapper(); //초기화
         this.modelMapper.getConfiguration().setFieldMatchingEnabled(true)
-                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
+                .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
                 .setMatchingStrategy(MatchingStrategies.STRICT); //일치여부 확인
 
 //        .setFieldMatchingEnabled(true)

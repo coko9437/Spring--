@@ -1,0 +1,122 @@
+250625
+
+<DAO DTO 이용하기.>
+
+## VO : Value Object
+	// 기능 : DB에서 받은 데이터를 담아둘 클래스 객체.
+	// DB에 데이터를 영향을 주는 역할(쓰기, 수정, 삭제 등)
+
+## DTO : (Data Transfer Object)
+	// 화면에서 사용자들로부터 받은 데이터를 담아둘 클래스 객체
+
+	구분	|  		DTO			|	   VO
+	용도	|  전송용 (프레젠테이션)			|  DB 매핑용 (비즈니스 도메인)
+	위치	|  컨트롤러, 뷰와 함께 사용			|  DAO, DB와 함께 사용
+         설계 목적	|  사용자 요청/응답 처리			|  DB 작업에 최적화된 구조
+         변환 필요성 |  보안/데이터 유효성/역할 분리 위해 필수	|
+-----------------------------------------------------------------------------------------------------------------
+// 순서 // 
+| 웹브라우저:화면 |      <-->      |  컨트롤러  |    <-->    |  서비스  |      <-->      |    DB(서버)    |
+
+(1) 화면에	    =>전달 		=>전달 		     =>전달 
+데이터 입력		     (2)받은 데이터  
+			    =>DTO로 변환
+						(3)받은 DTO
+						=>VO로 변환
+								        (4)받은 VO 처리
+								        =>DAO 이용해서
+								         DB쓰기작업
+
+								        (5) VO 처리완료
+		   <=전달		<=전달		     <=전달
+
+							   (6) VO 받음.
+							   => DTO로 변환
+			  (7)DTO 받음
+			  화면에 전달준비
+ (8)DTO를 받아서
+  JSP화면 출력
+ (JSTL문법 이용해서)
+-----------------------------------------------------------------------------------------------------------------
+💡 전반적인 구조 요약 (MVC + DTO/VO)
+DTO (Data Transfer Object): 데이터 전송용 객체 (웹 ↔ 컨트롤러 ↔ 서비스 간)
+
+VO (Value Object): 데이터베이스와 직접 연결되는 도메인 객체 (서비스 ↔ DB 간)
+
+
+✅ [웹 회원가입 예시] — "쓰기 동작" 흐름 (Insert)
+🔶 1단계: 웹브라우저 (JSP/HTML)
+사용자가 입력폼 작성 → 제출
+
+회원가입 예시 화면에서 데이터 입력하고 전달
+
+🔶 2단계: 컨트롤러
+DTO 객체로 데이터 수신
+
+- 예시: @ModelAttribute, @RequestBody 등으로 DTO에 자동 바인딩
+
+🔶 3단계: 서비스
+DTO를 VO로 변환
+
+이유: DAO는 VO 기반으로 DB 작업을 하기 때문
+
+🔶 4단계: DAO + DB
+VO를 기반으로 INSERT 쿼리 수행
+
+실제 데이터베이스에 저장됨
+
+
+✅ [데이터 조회 예시] — "읽기 동작" 흐름 (Select)
+🔷 1단계: 컨트롤러가 요청 (예: 특정 ID 조회)
+서비스 계층에 요청을 넘김
+
+🔷 2단계: 서비스
+DAO 호출 → DB에서 VO 가져옴
+
+🔷 3단계: VO → DTO로 변환
+DB와 직접 연결되는 VO는 외부에 노출하지 않음
+
+🔷 4단계: 컨트롤러 → JSP로 DTO 전달
+모델에 담아 JSP에 전달
+
+JSTL 등을 통해 화면에 출력
+
+>>>
+(입력) 웹브라우저 → [DTO] → 컨트롤러 → [DTO → VO 변환] → 서비스 → DAO → DB
+
+(출력) DB → [VO] → 서비스 → [VO → DTO 변환] → 컨트롤러 → JSP → 화면 출력
+
+
+## Mapper
+: SQL 문과 Java 객체를 연결해주는 중간 다리 역할
+
+DTO <-> VO , 2개의 모델 클래스의 변환
+
+// 변환도구 불러오기
+    private ModelMapper modelMapper; //선언
+
+    MapperUtil() { // 생성자
+        // DTO <--> VO 2개의 모델클래스 변환하기위한 설정.
+        this.modelMapper = new ModelMapper(); //초기화
+        this.modelMapper.getConfiguration()
+	.setFieldMatchingEnabled(true)  // 필드 매칭을 활성화합니다. 이를 통해 ModelMapper는 객체 간 필드 이름이 일치할 경우 직접 매핑을 수행할 수 있습니다.
+                .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE) // 접근 레벨을 PRIVATE으로 설정
+                	.setMatchingStrategy(MatchingStrategies.STRICT); //일치여부 확인. 매칭 전략을 STRICT(엄격)으로 설정
+
+	public ModelMapper get() {
+        		return modelMapper;
+    	}
+//        .setFieldMatchingEnabled(true)
+        // 필드 매칭을 활성화합니다. 이를 통해 ModelMapper는
+        // 객체 간 필드 이름이 일치할 경우 직접 매핑을 수행할 수 있습니다.
+
+//        .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
+        // 접근 레벨을 PRIVATE으로 설정합니다. 이렇게 하면 ModelMapper
+        // private 필드까지 접근하여 매핑할 수 있게 됩니다.
+
+//        .setMatchingStrategy(MatchingStrategies.STRICT) -
+        // 매칭 전략을 STRICT(엄격)으로 설정합니다.
+        // 이 설정은 소스와 대상의 필드 이름이 정확히
+        // 일치해야만 매핑을 수행하도록 합니다.
+
+
