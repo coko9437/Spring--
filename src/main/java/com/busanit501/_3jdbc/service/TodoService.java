@@ -91,5 +91,19 @@ public enum TodoService {
 
     }
 
+    //  삭제기능
+    public void remove(Long tno) throws  Exception {
+        log.info("서비스의 삭제 기능, tno 번호 확인 : " + tno);
+        dao.deleteOne(tno);
+
+    }
+
+    // 수정하는 기능
+    public void modify(TodoDTO todoDTO) throws  Exception {
+        log.info("todoService에서 작업중, 수정작업");
+        TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class);
+        dao.updateOne(todoVO);
+
+    }
 
 }

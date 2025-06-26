@@ -12,14 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet(name = "todoReadController2", urlPatterns = "/tood/read2")
+@WebServlet(name = "todoReadController2", urlPatterns = "/todo/read2")
 @Log4j2
 public class TodoReadController extends HttpServlet {
     // 하나조회 컨트롤러
     private TodoService todoService = TodoService.INSTANCE;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
         try {
 //            화면에서 쿼리스트링 형식으로 전달
@@ -35,6 +36,7 @@ public class TodoReadController extends HttpServlet {
             req.setAttribute("dto",todoDTO);
             // 화면 전달.
             req.getRequestDispatcher("/WEB-INF/todo/todoRead2.jsp").forward(req,resp);
+
         } catch (Exception e) {
             log.error(e.getMessage());
                 throw new RuntimeException(e);

@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -27,6 +28,27 @@ public class TodoRegController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.info("TodoRegController : 등록 화면 제공 , doGet 작업");
+
+//====================================================================================
+        // 추가작업... 세션을 이용한 시스템이 제공한 세션 확인.
+        HttpSession session = req.getSession();
+        // 기존에 JSESSIONID 가 없는 새로운 사용자 확인
+//        -> 최초 웹 서버에 접근한 상태.
+        if(session.isNew()) {
+            log.info("JSESSIONID 시스템 쿠키가 새로 만들어진 사용자.");
+            resp.sendRedirect("/login"); // <-- 아직 미구현
+            return;
+        }
+        // JSESSIONID 는 있지만, 해당 세션 컨텍스트에 loginInfo 이름으로 저장된 객체가 없는경우.
+        if(session.getAttribute("loginInfo")== null) {
+            log.info("로그인정보가 없는 사용자");
+            resp.sendRedirect("/login");
+            return;
+        }
+        // 정상적인 상태 : JSESSIONID 존재 + 세션이라는 서버의 임시메모리공간에 loginInfo가 있음.
+//        --> 실행함.
+        req.getRequestDispatcher("WEB-INF/todo/todoReg.jsp").forward(req, resp);
+//====================================================================================
         // 화면 전달 먼저 하기.
         req.getRequestDispatcher("/WEB-INF/todo/todoReg.jsp").forward(req, resp);
 

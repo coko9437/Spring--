@@ -41,8 +41,28 @@ public class TodoServiceTests {
     @Test
     public void testGetByTno() throws Exception {
         // 실제 조회할 디비 데이터 내용파악
-        TodoDTO todoDTO = todoService.getByTno(12L);
+        TodoDTO todoDTO = todoService.getByTno(3L);
         log.info("하나조회 기능 단위테스트 :"+todoDTO);
             log.info("DAO -> SERVICE 과정 ");
+    }
+
+    // 삭제 기능 테스트
+    @Test
+    public void testRemove() throws Exception {
+        // 실제 삭제할 tno 번호 파악
+        todoService.remove(10L); // 삭제할거라 받는게 필요없음.
+        log.info("DAO -> SERVICE 에서 삭제과정 ");
+    }
+
+    // 수정기능 테스트
+    @Test
+    public void testModify() throws Exception {
+        // 수정할 tno 번호 파악
+        TodoDTO todoDTO = todoService.getByTno(4L);
+        todoDTO.setTitle("제목 변경하기.");
+        log.info("서비스 단위테스트 수정 확인. todoDTO : "+todoDTO);
+
+        todoService.modify(todoDTO);
+        log.info("서비스 단위테스트 수정 확인2 ");
     }
 }
