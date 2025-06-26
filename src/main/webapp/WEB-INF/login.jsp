@@ -8,14 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>임시로그인 화면</title>
+    <title>임시로그인화면</title>
 </head>
 <body>
-    <h1> 임시 로그인 화면입니다.</h1>
-    <form action="/login" method="post">
-        <input type="text" name ="mid">
-        <input type="password" name ="mpw">
-        <button type="submit">로그인버튼</button>
-    </form>
+<h1>임시로그인화면</h1>
+<form action="/login" method="post">
+    <input type="text" name="mid">
+    <input type="password" name="mpw">
+    <button type="submit">로그인</button>
+</form>
 </body>
 </html>

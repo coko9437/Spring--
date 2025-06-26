@@ -15,24 +15,24 @@ import java.io.IOException;
 public class LoginCheckFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        log.info("LoginCheckFilter 에서 작업중. | /todo/* |로 접근시 검사 대상자.");
-        // 로그인 체크 규칙,
-//            ServletRequest -> HttpServletRequest로 다운캐스팅
+        log.info("LoginCheckFilter 에서, 작업중. /todo/* , 접근시 검사 대상입니다.");
+        // 로그인 체크 규칙 ,
+        // ServletRequest -> HttpServletRequest , 다운캐스팅,
         HttpServletRequest req = (HttpServletRequest)servletRequest;
         HttpServletResponse resp = (HttpServletResponse)servletResponse;
 
-        // 세션 이용하는 도구 가져오기
+        // 세션 이용하는 도구 가져오기.
         HttpSession session = req.getSession();
 
-        // 세션에 키(loginInfo), 값(mid+mpw) 존새하면 => 로그인된상태
-        // 세션에 "" 없으면 => 로그인 안되어있음.
-        if(session.getAttribute("loginInfo")==null){
-            log.info("LoginCheckFilter 에서 작업중. loginInfo 비어있음.");
+        // 세션에 키 : loginInfo , 값: mid+mpw , 존재하면, 로그인 된 상태이고,
+        // 세션에 키 : loginInfo  없으면, 로그인 안되었다.
+        if (session.getAttribute("loginInfo") == null) {
+            log.info("LoginCheckFilter 에서, 작업중, loginInfo 비어 있음");
             resp.sendRedirect("/login");
             return;
         }
 
-        // 위의 검사 규칙이 끝나고 이어서 진행하겠다. 라는 의미.
+        // 위의 검사 규칙이 끝나고, 이어서 진행하겠다. 의미라고 보면 됨.
         filterChain.doFilter(servletRequest, servletResponse);
     }
 }

@@ -14,19 +14,19 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@WebServlet(name = "todoRegController2", value = "/todo/register2")
 @Log4j2
-@WebServlet(name ="todoRegController2",value = "/todo/register2")
 public class TodoRegController extends HttpServlet {
     // 등록
 //        1) 등록하는 화면 -> get
 //        2) 등록한거 처리 -> post
 //        ===> 외주 맡기기... 등록 구현할 수 있는 todoService에 외주요청
     private TodoService todoService = TodoService.INSTANCE;
-
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         log.info("TodoRegController : 등록 화면 제공 , doGet 작업");
 
 //====================================================================================
@@ -40,7 +40,7 @@ public class TodoRegController extends HttpServlet {
             return;
         }
         // JSESSIONID 는 있지만, 해당 세션 컨텍스트에 loginInfo 이름으로 저장된 객체가 없는경우.
-        if(session.getAttribute("loginInfo")== null) {
+        if(session.getAttribute("loginInfo") == null) {
             log.info("로그인정보가 없는 사용자");
             resp.sendRedirect("/login");
             return;
@@ -57,7 +57,8 @@ public class TodoRegController extends HttpServlet {
     // 등록 처리기능
 //    화면으로부터 전달받은 데이터를 모델클래스 (TodoDTO)에 담아서 전달하기.
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 //  ** 현재 인코딩문제로 한글이 깨진상태로 등록됨.
 
         // 화면으로 부터 전달받은 데이터 인코딩 타입 UTF-8,
@@ -65,7 +66,7 @@ public class TodoRegController extends HttpServlet {
         // 현재 방법1, 코드로 처리 했고,
         // 방법2) 뒤에서 처리하기.
         // web.xml, 서버 시작 할 때, 항상 들어오는 데이터 타입을  UTF-8 기본설정.
-        req.setCharacterEncoding("UTF-8");
+//        req.setCharacterEncoding("UTF-8");
         TodoDTO todoDTO = TodoDTO.builder()
                 .title(req.getParameter("title"))
                 .dueDate(LocalDate.parse(req.getParameter("dueDate"), formatter))

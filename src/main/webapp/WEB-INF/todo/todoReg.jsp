@@ -11,16 +11,19 @@
     <title>Title</title>
 </head>
 <body>
+<h1>등록 임시 화면 </h1>
+<form action="/todo/register2 " method="post">
+    <div>
+        <input type="text" name="title" placeholder="todo의 제목을 입력 해주세요">
+    </div>
+    <div>
+        <input type="date" name="dueDate">
+    </div>
+    <div>
+        <button type="reset">리셋</button>
+        <button type="submit">등록처리</button>
+    </div>
 
-    <h1>등록 임시 화면</h1>
-
-<form action="/todo/register2" method="post">
-    <input type="text" name="title" placeholder="todo의 제목을 입력 해주세요">
-    <input type="date" name="dueDate">
-    <button type="reset">리셋</button>
-    <button type="submit">등록처리</button>
-    <h3>이용한 서블릿 이름 : todoRegController</h3>
-    <h3>해당 JSP파일 이름 : todoReg.jsp</h3>
 </form>
 </body>
 </html>
