@@ -35,4 +35,14 @@ public class TodoServiceTests {
         todoService.register(todoDTO);
 
     }
+
+    // 하나조회 기능 테스트
+
+    @Test
+    public void testGetByTno() throws Exception {
+        // 실제 조회할 디비 데이터 내용파악
+        TodoDTO todoDTO = todoService.getByTno(12L);
+        log.info("하나조회 기능 단위테스트 :"+todoDTO);
+            log.info("DAO -> SERVICE 과정 ");
+    }
 }

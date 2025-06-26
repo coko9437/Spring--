@@ -4,7 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.Connection;
-
+// 디비 연결 편하게하기위해서.. (getConnection, prepared, pstmt)
 public enum ConnectionUtil {
     INSTANCE;
     // 히카리 CP 설정 불러오기. 

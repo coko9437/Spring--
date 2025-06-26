@@ -34,12 +34,14 @@ public enum TodoService {
         modelMapper = MapperUtil.INSTANCE.get(); // MapperUtil 클래스에서 만들어놓은거 가져오기
 
     }
+
     // 등록기능
 //    화면에서 데이터 입력후 전달 -> 컨트롤러에서 받아서 DTO에 담기
 //    -> DTO를 서비스에 전달 -> (서비스) DTO를 VO로 변환 -> DB에 전달
 //    -> DB에서 VO처리하고 서비스에 전달 -> (서비스) VO를 DTO로 변환
 //    -> DTO를 화면에 전달.
 //    ** DAO가 DB를 쓰는 과정임. **
+    // 전달 개요 : 화면 -> 컨트롤러(C) -> 서비스 (S):현위치 - > DAO() -> DB
     public void register(TodoDTO todoDTO) throws  Exception {
             //System.out.println("화면으로부터 받은 데이터 확인. todoVO : "+todoDTO);
             log.info("화면으로부터 받은 데이터 확인. todoVO : "+todoDTO);
@@ -77,7 +79,17 @@ public enum TodoService {
     }
 
 
-    // 하나 조회
+    // 하나 조회 DTO -> VO로 변환해야함.
+    public TodoDTO getByTno(long tno) throws  Exception {
+        log.info("TodoService. 하나조회 기능");
+        // DAO 로 부터 전달받은 데이터타입
+        TodoVO todoVo = dao.selectOne(tno);
+        // 받은 VO -> DTO 변환하기.
+        TodoDTO todoDTO = modelMapper.map(todoVo, TodoDTO.class);
+        return todoDTO;
+        // 기능 만들고 뭐한다? 단위테스트 ---> TodoServiceTests
+
+    }
 
 
 }

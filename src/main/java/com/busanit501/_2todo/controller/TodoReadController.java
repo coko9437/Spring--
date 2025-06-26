@@ -26,7 +26,7 @@ public class TodoReadController extends HttpServlet {
         TodoDTO dto  = TodoService.INSTANCE.getTodoByTno(tno);
         // 화면에 데이터 탑재하기.
         req.setAttribute("dto",dto);
-        req.getRequestDispatcher("/WEB-INF/todo/todoRead.jsp").forward(req,resp);
+        req.getRequestDispatcher("/WEB-INF/todo/todoRead_backup.jsp").forward(req,resp);
 
     }
 }

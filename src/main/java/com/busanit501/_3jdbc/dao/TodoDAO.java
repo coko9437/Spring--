@@ -42,8 +42,10 @@ public class TodoDAO {
         return now;
     }
 
+
     // 등록기능... 화면에서 todo의 내용을 전달받아와서 DB에 넣을예정
 //    화면에서 데이터를 각각 받는것보다 모델클래스에 담아서 전달함.
+//    전달개요 : 화면 -> 컨트롤러(C) -> 서비스(S) -> DAO(현재위치) -> DB //
     public void insert(TodoVO todoVO) throws Exception{
         // 등록 insert sql 문장 작성.
         String sql = "insert into tbl_todo (title, dueDate, finished) values (?, ?, ?)";
