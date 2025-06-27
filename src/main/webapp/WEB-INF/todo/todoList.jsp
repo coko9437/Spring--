@@ -20,7 +20,12 @@
 <%--조건부 출력--%>
 <c:if test="${not empty sessionScope.loginInfo}">
     <p>로그인 상태 : 로그인된 경우 </p>
-    <p>EL 표기법 , 간단히 로그인 정보 : ${sessionScope.loginInfo}</p>
+    <p>EL 표기법 , 간단히 로그인 정보 sessionScope.loginInfo : ${sessionScope.loginInfo}</p>
+
+    <h2>로그인 유저의 정보가 들어있는 , loginInfo 객체를 이용해서, 각각의 정보를 조회</h2>
+    <h3>mid : ${loginInfo.mid}</h3>
+    <h3>mpw : ${loginInfo.mpw}</h3>
+    <h3>mname : ${loginInfo.mname}</h3>
     <form action="/logout" method="post">
         <button type="submit">로그아웃</button>
     </form>
