@@ -1,0 +1,43 @@
+250627
+
+## UUID란 무엇인가?
+- 정의
+
+128비트(16바이트) 길이의 고유 식별자
+
+전 세계적으로 중복될 가능성이 극히 낮도록 설계된 식별자
+
+## Optional<T>의 개념
+널(null) 안전성
+
+전통적으로 메서드가 객체를 찾지 못하면 null을 반환하고 호출 측에서
+NullPointerException을 방지하기 위해 null 검사를 해야 했습니다.
+
+Optional<T>는 값이 있을 수도, 없을 수도 있음을 명시적으로 표현합니다.
+
+
+## EL(Expression Language) 표기법
+-----------------------------------------------------------------
+- 데이터 검색 범위 (순서대로 검색) -
+1. **Page Scope**: JSP의 `<c:set>` 지정 변수
+2. **Request Scope**: `HttpServletRequest.setAttribute()`로 저장한 변수
+3. **Session Scope**: `HttpSession.setAttribute()`로 저장한 변수
+4. **Application Scope**: `ServletContext.setAttribute()`로 저장한 변수
+
+** 결론, 화면, jsp 화면에서, ${loginInfo} 접근 순서
+   위에서, 1 -> 2 -> 3-> 4 , 모두 검색하고, 그리고 없으면, 진짜 없음.
+-------------------------------------------------
+|  수업순서  |
+MemberVO 클래스 ->
+MemberDAO 클래스 ->
+MemberDTO 클래스 ->
+Login컨트롤러 ->
+LoginJSP ->
+todoList.JSP ->
+todoReadController클래스 쿠키추가 ->
+Login.JSP 자동로그인추가 ->
+Login컨트롤러 UUID ->
+MemberDAO,DTO클래스 ->
+MemberService 클래스 ->
+Login체크필터 클래스 ->
+Login 컨트롤러 클래스
