@@ -12,24 +12,23 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 @Log4j2
 public class WebAppListener implements ServletContextListener {
-
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        log.info("WebAppListener클래스, contextInitialized 초기작업 1=================================");
-        log.info("WebAppListener클래스, contextInitialized 초기작업 1=================================");
-        log.info("WebAppListener클래스, contextInitialized 초기작업 1=================================");
-        log.info("WebAppListener클래스, 프로젝트가 실행되면 하고싶은작업 예시");
+        log.info(("WebAppListener 클래스, 초기 작업 1 : init 라고 표현. ======================="));
+        log.info(("WebAppListener 클래스, 초기 작업 1======================="));
+        log.info(("WebAppListener 클래스, 초기 작업 1======================="));
+        log.info(("WebAppListener 클래스, 프로젝트가 실행되면, 하고 싶은 작업 예시======================="));
 
-        // 서블릿 컨텍스트, 임시공간에 서버시작시 특정 키,값 을 저장해서
+        // 서블릿 컨텍스트 , 임시 공간에, 서버 시작시, 특정 키, 값을 저장해서,
         // 리스트 화면에서 불러와 사용해보기.
         ServletContext servletContext = event.getServletContext();
-        servletContext.setAttribute("lunchMenu", "오늘 점심 뭐먹지?");
-    }
+        servletContext.setAttribute("lunchMenu", "오늘 점심 뭐 먹지? 도시락");
 
+    }
     @Override
     public void contextDestroyed(ServletContextEvent event) {
-        log.info("WebAppListener클래스, 종료작업 destroy=================================");
-        log.info("WebAppListener클래스, 종료작업 destroy=================================");
-        log.info("WebAppListener클래스, 종료작업 destroy=================================");
+        log.info(("WebAppListener 클래스, 종료 작업 destroy ======================="));
+        log.info(("WebAppListener 클래스, 종료 작업 destroy ======================="));
+        log.info(("WebAppListener 클래스, 종료 작업 destroy ======================="));
     }
 }
