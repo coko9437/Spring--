@@ -4,6 +4,7 @@ import com.busanit501._3jdbc.dto.TodoDTO;
 import com.busanit501._3jdbc.service.TodoService;
 import lombok.extern.log4j.Log4j2;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +25,13 @@ public class TodoRegController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.info("TodoRegController : 등록 화면 제공 , doGet 작업");
+        //===================================================================================================
+        // 0630 서블릿리스너 통해서 서버시작시 등록된 내용을 리스트에서 사용해보기.
+        ServletContext servletContext = req.getServletContext();
+        log.info("TodoRegController클래스, 서버 시작시 등록된 값 사용해보기");
+        log.info((String)servletContext.getAttribute("lunchMenu"));
+        //===================================================================================================
+
 
         //=======================================================================
         // 추가 작업, 세션을 이용한 , 시스템이 제공한 세션 확인.
